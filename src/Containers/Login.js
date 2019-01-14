@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Login.css';
 import Input from '../Components/UI/Input/Input';
 import Button from '../Components/UI/Button/Button';
+import Avatar from '../Components/UI/Avatar/Avatar';
+import axios from '../axios';
 
 class Login extends Component {
     state = {
@@ -54,6 +56,12 @@ class Login extends Component {
         event.preventDefault();
         let username = this.state.loginForm.username.value;
         let password = this.state.loginForm.password.value;
+
+        axios.get('/Users.json')
+            .then(response =>{
+                console.log('response data is', response.data);
+            })
+
         console.log('Login CLicked',username, password);
     }
 
@@ -69,7 +77,7 @@ class Login extends Component {
         let form = (
             <form onSubmit={this.loginHandler}>
                 <div className='imgcontainer'>
-                    <img src={require('../assets/img_avatar2.png')} alt='Avatar' className='avatar' />
+                    <Avatar avatarSrc = {require('../assets/img_avatar2.png')} avatarAlt='Avatar' class='avatar' />
                 </div>
                 <div className='container'>
                     {formElementsArray.map(formElement => (
@@ -95,43 +103,8 @@ class Login extends Component {
 
         return (
             <div className='body'>
-
                 <h2>Login Form</h2>
                     {form}
-                {/* <div className='form'>
-                    <div className='imgcontainer'>
-                        <img src={require('../assets/img_avatar2.png')} alt='Avatar' className='avatar' />
-                    </div>
-
-                    <div className='container'>
-                        <Input type='label' name='uname' value='Username'>
-                            <Input
-                                name='uname'
-                                type='text'
-                                placeholder='Enter Username'
-                                value={this.state.username}
-                                changed={(event) => this.inputChangedHandler(event, 'username')} />
-                        </Input>
-
-                        <Input type='label' name='psw' value='Password'>
-                            <Input
-                                name='psw'
-                                type='password'
-                                placeholder='Enter Password'
-                                value={this.state.password}
-                                changed={(event) => this.inputChangedHandler(event, 'password')} />
-                        </Input>
-                        <Input
-                            label='Login'
-                            type='submit'
-                            click={this.buttonClickHandler} />
-                    </div>
-
-                    <div className='container' style={{ backgroundColor: '#f1f1f1' }} >
-                        <Input label='Cancel' type='submit' class='cancelbtn' />
-                    </div>
-                </div> */}
-
             </div>
         )
     }
