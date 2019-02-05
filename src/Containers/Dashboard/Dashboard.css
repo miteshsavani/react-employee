@@ -1,0 +1,9 @@
+.Dashboard {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin:0 auto;
+    padding:0;
+}

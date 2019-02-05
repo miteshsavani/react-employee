@@ -4,7 +4,7 @@ import * as actionType from '../actions/actionTypes';
 
 
 const intialState = {
-    isAuth: false,
+    isAuth: true,
     message: null
 }
 

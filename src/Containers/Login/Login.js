@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import { Redirect } from 'react-router-dom';
 
-import './Login.css';
-import Input from '../../Components/UI/Input/Input';
-import Button from '../../Components/UI/Button/Button';
-import Avatar from '../../Components/UI/Avatar/Avatar';
-import axios from 'axios';
+import classes from './Login.css';
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
+import Avatar from '../../components/UI/Avatar/Avatar';
+
 
 class Login extends Component {
     state = {
@@ -97,10 +97,10 @@ class Login extends Component {
 
         let form = (
             <form onSubmit={this.loginHandler}>
-                <div className='imgcontainer'>
-                    <Avatar avatarSrc={require('../../assets/img_avatar2.png')} avatarAlt='Avatar' class='avatar' />
+                <div className={classes.imgcontainer}>
+                    <Avatar avatarSrc={require('../../assets/img_avatar2.png')} avatarAlt='Avatar' class={classes.avatar} />
                 </div>
-                <div className='container'>
+                <div className={classes.container}>
                     {formElementsArray.map(formElement => (
                         <Input
                             key={formElement.id}
@@ -114,8 +114,8 @@ class Login extends Component {
                         Login
                             </Button>
                 </div>
-                <div className='container' style={{ backgroundColor: '#f1f1f1' }} >
-                    <Button class='cancelbtn'>
+                <div className={classes.container} style={{ backgroundColor: '#f1f1f1' }} >
+                    <Button class={classes.cancelbtn}>
                         Cancel
                             </Button>
                 </div>
@@ -137,7 +137,7 @@ class Login extends Component {
         }
 
         return (
-            <div className='body'>
+            <div className={classes.body}>
                 {authRedirect}
                 {page}
             </div>
