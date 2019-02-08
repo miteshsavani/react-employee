@@ -3,12 +3,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 
-export const onLogin = (message) => {
-    return {
-        type: actionTypes.ON_LOGIN,
-        message: message
-    }
-}
+
 
 export const AuthLogin = (email, password) => {
     return dispatch => {
@@ -26,6 +21,13 @@ export const AuthLogin = (email, password) => {
     }
 }
 
+
+export const onLogin = (message) => {
+    return {
+        type: actionTypes.ON_LOGIN,
+        message: message
+    }
+}
 export const onLogout = (message) => {
     return {
         type: actionTypes.ON_LOGOUT,

@@ -84,7 +84,7 @@ class Login extends Component {
         let authRedirect = null;
         if (this.props.isAuthenticated) {
             console.log('TRUEEEE');
-            authRedirect = <Redirect to="/dashboard" />
+            authRedirect = <Redirect to="/profile" />
         }
 
         const formElementsArray = [];
