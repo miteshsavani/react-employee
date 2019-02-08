@@ -13,21 +13,18 @@ import classes from './App.css';
 class App extends Component {
   render() {
     return (
-      <div className={classes.App}>
         <Switch>
-          <Route path="/" exact component={Dashboard} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/profile" component={Profile} />
           <Route path="/logout" component={Logout} />
-         
+          <Route path="/" exact component={Login} />
         </Switch>
-      </div>
     );
   }
 }
 
 
-export default App;
+export default withRouter(App);
 
 
 

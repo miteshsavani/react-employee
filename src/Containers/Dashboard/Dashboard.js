@@ -3,8 +3,8 @@ import Aux from '../../hoc/aAux';
 import Layout from '../../components/Layout/Layout';
 import classes from './Dashboard.css';
 
-/* import * as actions from '../../store/actions';
-import { connect } from 'react-redux'; */
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
 
 import NewsBlock from '../../components/UI/NewsBlock/NewsBlock';
 import Modal from '../../components/UI/Modal/Modal';
@@ -16,14 +16,11 @@ import Grid from "@material-ui/core/Grid";
 class Dashboard extends Component {
 
     state = {
-        NewsData: [{
-            title: 'test1'
-        }],
         modalShow: false,
         newsDescription:null
     }
 
-   // componentDidMount() {
+    componentDidMount() {
         /* axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=fd94682fa1b24ff5b9316a250c504b17')
             .then(response => {
                 this.setState({
@@ -31,9 +28,11 @@ class Dashboard extends Component {
                 })
                 console.log('set data');
             }) */
-           /*  if (this.props.NewsData.length === 0)
-            this.props.onFetchNews(); */
-    //}
+           if (this.props.NewsData.length === 0) {
+               console.log('Yes');
+           }
+            this.props.onFetchNews();
+    }
 
     modalClosedHandler = () => {
         return this.setState({modalShow: false});
@@ -60,7 +59,7 @@ class Dashboard extends Component {
                         justify="center"
                         spacing={16} >
                         {
-                            this.state.NewsData.filter(news => news.urlToImage !== null).map(news => {
+                            this.props.NewsData.filter(news => news.urlToImage !== null).map(news => {
                                 return <NewsBlock
                                     title={news.title}
                                     key={news.title}
@@ -77,9 +76,9 @@ class Dashboard extends Component {
 }
 
 
-/* const mapStateToProps = state => {
+const mapStateToProps = state => {
     return {
-        NewsData: state.news.allNews
+        NewsData: state.fetchNews.allNews
     }
 }
 
@@ -87,8 +86,6 @@ const mapStateToDispatch = dispatch => {
     return {
         onFetchNews: () => dispatch(actions.fetchAllNews())
     }
-}  */
+} 
 
-export default Dashboard;
-
-//export default connect(mapStateToProps, mapStateToDispatch)(Dashboard);
+export default connect(mapStateToProps, mapStateToDispatch)(Dashboard);
