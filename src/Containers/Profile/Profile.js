@@ -7,8 +7,8 @@ class profile extends Component {
     render() {
         return (
             <Aux>
-                <Layout>
-                    <h3> I am Profile </h3>
+                <Layout title="Profile">
+                    
                 </Layout>
             </Aux>
         );

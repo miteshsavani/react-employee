@@ -1,0 +1,12 @@
+.card {
+    max-width: 345px;
+ }
+
+ .paper {
+    height: auth;
+    width: 250px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: left;
+ }
+ 

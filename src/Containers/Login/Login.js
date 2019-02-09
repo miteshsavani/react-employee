@@ -65,14 +65,6 @@ class Login extends Component {
         console.log('password', password);
         this.props.onAuth(username, password);
 
-        
-
-       /*  axios.get('/Users.json')
-            .then(response => {
-                console.log('response data is', response.data);
-            })
-
-        console.log('Login CLicked', username, password); */
     }
 
     componentDidMount() {
@@ -84,7 +76,7 @@ class Login extends Component {
         let authRedirect = null;
         if (this.props.isAuthenticated) {
             console.log('TRUEEEE');
-            authRedirect = <Redirect to="/dashboard" />
+            authRedirect = <Redirect to="/country" />
         }
 
         const formElementsArray = [];
@@ -114,17 +106,12 @@ class Login extends Component {
                         Login
                             </Button>
                 </div>
-                <div className={classes.container} style={{ backgroundColor: '#f1f1f1' }} >
-                    <Button class={classes.cancelbtn}>
-                        Cancel
-                            </Button>
-                </div>
             </form>
         );
 
         let page = (
             <div>
-                <h2>Login Form </h2>
+                <h2> Daily News Source </h2>
                 { form }
             </div>
         );
@@ -147,8 +134,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.isAuth,
-        status: state.message
+        isAuthenticated: state.auth.isAuth,
+        status: state.auth.message
     }
 }
 

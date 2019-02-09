@@ -1,52 +1,29 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Login from './containers/Login/Login';
-import Dashboard from './containers/Dashboard/Dashboard';
+import News from './containers/News/News';
 import Profile from './containers/Profile/Profile';
+import NewsSource from './containers/NewsSource/NewsSource';
+import Country from './containers/Country/Country';
 import Logout from './containers/Logout/Logout';
-import classes from './App.css';
 
 
 class App extends Component {
   render() {
-
-    let routes = (
+    return (
       <Switch>
-        <Route path="/dashboard" component={Dashboard} />
-      
-          <Route path="/profile" component={Profile} />
+         <Route path="/news" exact component={News} />
+          {/* <Route path="/profile" component={Profile} /> */}
+          <Route path="/newsSource" component={NewsSource} />
+          <Route path="/country" component={Country} />
           <Route path="/logout" component={Logout} />
-        <Route path="/" exact component={Login} />
-        <Redirect to="/" />
+          <Route path="/" exact component={Login} />
       </Switch>
     );
-
-   /*  if (this.props.isAuthenticated) {
-      routes = (
-        <Switch>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/logout" component={Logout} />
-        </Switch>
-      );
-    } */
-
-    return (
-      <div className={classes.App}>
-        {routes}
-      </div>
-    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.isAuth,
-    status: state.message
-  }
-}
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(App);

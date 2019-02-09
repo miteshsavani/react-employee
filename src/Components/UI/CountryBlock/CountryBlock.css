@@ -1,0 +1,29 @@
+.card {
+    max-width: 345px;
+ }
+
+ .paper {
+    height: auto;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+ }
+ .avaibleCountry {
+    background-color:#eaeaea !important;
+ }
+ .media {
+     height: 64px;
+     width: 64px;
+ }
+
+ .countryName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+    font-size: 12px;
+ }
+ 
