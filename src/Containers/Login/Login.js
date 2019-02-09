@@ -19,7 +19,8 @@ class Login extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Enter Username'
+                    placeholder: 'Enter Username',
+                    autoFocus:'autoFocus'
                 },
                 validatation: {
                     required: true
