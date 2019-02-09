@@ -1,3 +1,27 @@
 .Content {
-    margin-top:72px;
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 72px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    text-align: center;
+}
+
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 2em
+}
+::-webkit-scrollbar-button {
+    background: #FFF
+}
+::-webkit-scrollbar-track-piece {
+    background: #FFF
+}
+::-webkit-scrollbar-thumb {
+    background: #40a4c8
 }

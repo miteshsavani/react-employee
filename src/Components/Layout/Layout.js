@@ -42,6 +42,7 @@ class Layout extends Component {
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerCloseHandler} />
                 <main className={classes.Content}>
+                    <div className={classes.title}> <h3> {this.props.title} </h3></div>
                     {this.props.children}
                 </main>
             </Aux>
@@ -51,8 +52,8 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.isAuth,
-        status: state.message
+        isAuthenticated: state.auth.isAuth,
+        status: state.auth.message
     }
 }
 
