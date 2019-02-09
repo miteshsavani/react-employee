@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Login from './containers/Login/Login';
 import News from './containers/News/News';
-import Profile from './containers/Profile/Profile';
+/* import Profile from './containers/Profile/Profile'; */
 import NewsSource from './containers/NewsSource/NewsSource';
 import Country from './containers/Country/Country';
 import Logout from './containers/Logout/Logout';

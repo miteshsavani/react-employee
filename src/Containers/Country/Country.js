@@ -76,27 +76,41 @@ class Country extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            redirect: false
+        });
+
         if (this.props.countrySource) {
             this.props.onfetchAllCountry();
         }
+        this.props.onResetNews();
     }
 
     onCountryBlockClickHandler = (countryId, coutryName) =>{
+        this.props.onFetchNewsSource(countryId);
         this.setState({
-            redirect: true,
             countryId: countryId,
-            countryName: coutryName
+            countryName: coutryName,
+            redirect: true
         })
     }
 
     render() {
 
-        if (this.state.redirect) {
+        if (this.props.isChannelFound && this.state.redirect) {
             return <Redirect to={{
                 pathname: '/newsSource',
-                state: { id: this.state.countryId, countryName: this.state.countryName }
+                state: { id: this.state.countryId, countryName: this.state.countryName  }
             }} />;
         }
+
+        if (this.props.isTopHeadlinesFound && this.state.redirect) {
+            return <Redirect to={{
+                pathname: '/news',
+                state: { id: this.state.countryId, channelName: this.state.countryName + "'s Top Headline"}
+            }} />;
+        }
+
 
         let countryBoard = (
             <Grid container justify="center" spacing={16} >
@@ -114,7 +128,7 @@ class Country extends Component {
                     </Grid>
         );
 
-        if (this.props.loading) {
+        if (this.props.loading || this.props.loadingNews) {
             countryBoard = <Spinner />
         }
 
@@ -131,13 +145,18 @@ class Country extends Component {
 const mapStateToProps = state => {
     return {
         countrySource: state.fetchCountry.countries,
-        loading: state.fetchCountry.loading
+        loading: state.fetchCountry.loading,
+        loadingNews: state.fetchNews.loading,
+        isChannelFound: state.fetchNews.isChannelFound,
+        isTopHeadlinesFound: state.fetchNews.isTopHeadlinesFound
     }
 }
 
 const mapStateToDispatch = dispatch => {
     return {
-        onfetchAllCountry: () => dispatch(actions.fetchAllCountry())
+        onfetchAllCountry: () => dispatch(actions.fetchAllCountry()),
+        onFetchNewsSource: (countryId) => dispatch(actions.fetchAllNewsSource(countryId)),
+        onResetNews: () => dispatch(actions.resetNewsSourceandTopHeadline())
     }
 }
 

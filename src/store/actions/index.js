@@ -1,11 +1,13 @@
 export {
     onLogout,
-    AuthLogin
+    AuthLogin,
+    resetError
 } from './auth';
 
 export {
     fetchAllNews,
-    fetchAllNewsSource
+    fetchAllNewsSource,
+    resetNewsSourceandTopHeadline
  } from './news';
 
  export {

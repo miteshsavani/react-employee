@@ -11,11 +11,29 @@ export const fetchAllNews = (newsId) => {
                 console.log(response);
                 dispatch(onGetNewsSuccess(response.data.articles));
             })
-            .catch( error => {
+            .catch(error => {
                 console.log('error on news fetch', error);
                 dispatch(newsFetchFailed(error));
             })
+
     }
+}
+
+
+const fetchTopHeadline = (contryId) => {
+    return dispatch => {
+        dispatch(fetchTopHeadlinesStart());
+        axios.get(`https://newsapi.org/v2/top-headlines?country=${contryId}&apiKey=fd94682fa1b24ff5b9316a250c504b17`)
+            .then(response => {
+                console.log(response);
+                dispatch(fetchTopHeadlinesSuccess(response.data.articles));
+            })
+            .catch(error => {
+                console.log('error on news fetch', error);
+                dispatch(fetchTopHeadlinesFailed(error));
+            })
+    }
+
 }
 
 export const fetchAllNewsSource = (countryId) => {
@@ -24,9 +42,14 @@ export const fetchAllNewsSource = (countryId) => {
         axios.get(`https://newsapi.org/v2/sources?language=en&country=${countryId}&apiKey=fd94682fa1b24ff5b9316a250c504b17`)
             .then(response => {
                 console.log(response);
-                dispatch(onNewsSourceSuccess(response.data.sources));
+                if (response.data.sources.length === 0) {
+                    console.log('New Source is blank');
+                    dispatch(fetchTopHeadline(countryId));
+                }
+                else
+                    dispatch(onNewsSourceSuccess(response.data.sources));
             })
-            .catch( error => {
+            .catch(error => {
                 console.log('error on news source fetch', error);
                 dispatch(newsSourceFetchFailed(error));
             })
@@ -34,6 +57,11 @@ export const fetchAllNewsSource = (countryId) => {
 }
 
 
+export const resetNewsSourceandTopHeadline = () => {
+    return {
+        type: actionTypes.NEWS_RESET
+    }
+}
 
 export const onGetNewsSuccess = (allNews) => {
     return {
@@ -73,5 +101,25 @@ const newsFetchFailed = (error) => {
     return {
         type: actionTypes.NEWS_FETCH_FAILED,
         error: error
+    }
+}
+
+const fetchTopHeadlinesStart = () => {
+    return {
+        type: actionTypes.NEWS_TOP_HEADLINE_START
+    }
+}
+
+const fetchTopHeadlinesFailed = (error) => {
+    return {
+        type: actionTypes.NEWS_TOP_HEADLINE_FAILED,
+        error: error
+    }
+}
+
+const fetchTopHeadlinesSuccess = (data) => {
+    return {
+        type: actionTypes.NEWS_TOP_HEADLINE_SUCESS,
+        data: data
     }
 }

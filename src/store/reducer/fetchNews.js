@@ -7,15 +7,17 @@ const intialState = {
     allNews: [],
     allNewsSource: [],
     loading: false,
-    error: null
+    error: null,
+    isChannelFound: null,
+    isTopHeadlinesFound: null
 }
 
 const setNews = (state, data) => {
-    return updatedObject(state, { allNews: data, loading: false, error: null });
+    return updatedObject(state, { allNews: data, loading: false, error: null, isChannelFound: false, isTopHeadlinesFound:false });
 }
 
 const setNewsSource = (state, data) => {
-    return updatedObject(state, { allNewsSource: data,  loading: false, error: null });
+    return updatedObject(state, { allNewsSource: data,  loading: false, error: null, isChannelFound: true , isTopHeadlinesFound: false});
 }
 
 
@@ -28,17 +30,40 @@ const fetchNews = (state = intialState, action) => {
             return setNewsSource(state, action.data);
         case actionType.NEWS_SOURCE_FETCH_START:
         case actionType.NEWS_FETCH_START:
+        case actionType.NEWS_TOP_HEADLINE_START:
             return {
                 ...state,
                 loading: true,
-                error: null
+                error: null,
+                isChannelFound: false,
+                isTopHeadlinesFound:false
             }
         case actionType.NEWS_SOURCE_FETCH_FAILED:
         case actionType.NEWS_FETCH_FAILED:
-            return {
+        case actionType.NEWS_TOP_HEADLINE_FAILED:
+        return {
                 ...state,
                 loading: false,
-                error: action.error
+                error: action.error,
+                isChannelFound: false,
+                isTopHeadlinesFound:false
+            }
+        case actionType.NEWS_TOP_HEADLINE_SUCESS:
+            return {
+                ...state,
+                loading:false,
+                error: null,
+                isChannelFound:false,
+                isTopHeadlinesFound:true,
+                allNews: action.data
+            }
+        case actionType.NEWS_RESET:
+            return {
+                ...state,
+                loading:false,
+                error: null,
+                isChannelFound: false,
+                isTopHeadlinesFound: false
             }
         default:
             return state;

@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import { Redirect } from 'react-router-dom';
 
+import Modal from '../../components/UI/Modal/Modal';
 import classes from './Login.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Avatar from '../../components/UI/Avatar/Avatar';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Aux from '../../hoc/aAux';
 
 
 class Login extends Component {
@@ -71,11 +74,14 @@ class Login extends Component {
         console.log('Isauth', this.props.isAuthenticated);
     }
 
+    modalClosedHandler = () => {
+        this.props.resetError();
+    }
+
     render() {
 
         let authRedirect = null;
         if (this.props.isAuthenticated) {
-            console.log('TRUEEEE');
             authRedirect = <Redirect to="/country" />
         }
 
@@ -87,32 +93,45 @@ class Login extends Component {
             });
         }
 
+        let loginButton = (
+            <Button click={this.loginHandler}>
+                Login
+            </Button>
+        );
+
+        if (this.props.loading) {
+            loginButton = <Spinner />;
+        }
+
         let form = (
-            <form onSubmit={this.loginHandler}>
-                <div className={classes.imgcontainer}>
-                    <Avatar avatarSrc={require('../../assets/img_avatar2.png')} avatarAlt='Avatar' class={classes.avatar} />
-                </div>
-                <div className={classes.container}>
-                    {formElementsArray.map(formElement => (
-                        <Input
-                            key={formElement.id}
-                            elementType={formElement.config.elementType}
-                            elementConfig={formElement.config.elementConfig}
-                            value={formElement.config.value}
-                            changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                        />
-                    ))}
-                    <Button click={this.loginHandler}>
-                        Login
-                            </Button>
-                </div>
-            </form>
+            <Aux>
+                <Modal show={this.props.error} modalClosed={this.modalClosedHandler}>
+                    {this.props.error}
+                </Modal>
+                <form onSubmit={this.loginHandler}>
+                    <div className={classes.imgcontainer}>
+                        <Avatar avatarSrc={require('../../assets/img_avatar2.png')} avatarAlt='Avatar' class={classes.avatar} />
+                    </div>
+                    <div className={classes.container}>
+                        {formElementsArray.map(formElement => (
+                            <Input
+                                key={formElement.id}
+                                elementType={formElement.config.elementType}
+                                elementConfig={formElement.config.elementConfig}
+                                value={formElement.config.value}
+                                changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                            />
+                        ))}
+                        {loginButton}
+                    </div>
+                </form>
+            </Aux>
         );
 
         let page = (
             <div>
                 <h2> Daily News Source </h2>
-                { form }
+                {form}
             </div>
         );
 
@@ -135,13 +154,15 @@ class Login extends Component {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.isAuth,
-        status: state.auth.message
+        error: state.auth.error,
+        loading: state.auth.loading
     }
 }
 
 const mapStateToDispatch = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.AuthLogin(email, password))
+        onAuth: (email, password) => dispatch(actions.AuthLogin(email, password)),
+        resetError: () => dispatch(actions.resetError())
     }
 }
 

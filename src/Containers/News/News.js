@@ -37,9 +37,11 @@ class News extends Component {
             console.log('location empty');
             this.props.onFetchNews('bbc-news');
         } else {
+            if (!this.props.isTopHeadlinesFound) {
+                this.props.onFetchNews(this.props.location.state.id);
+            }
             console.log(this.props.location.state.channelName);
             this.setState({ channelName: this.props.location.state.channelName });
-            this.props.onFetchNews(this.props.location.state.id);
         }
     }
 
@@ -99,6 +101,8 @@ class News extends Component {
 
         if (this.props.loading) {
             newsBoard = <Spinner />;
+        } else if (this.props.NewsData.length === 0){
+            newsBoard = (<div className={classes.Notfound}> We don't have Top headline in this country </div>);
         }
 
         return (
@@ -141,7 +145,8 @@ class News extends Component {
 const mapStateToProps = state => {
     return {
         NewsData: state.fetchNews.allNews,
-        loading: state.fetchNews.loading
+        loading: state.fetchNews.loading,
+        isTopHeadlinesFound: state.fetchNews.isTopHeadlinesFound
     }
 }
 
